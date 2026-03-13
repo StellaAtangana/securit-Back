@@ -9,20 +9,20 @@ const [error, setError] = useState('');
 const navigate = useNavigate();
 
 const handleInscription = async (e) => {
-    e.preventDefault();
-    setError('');
-    try {
-    const { response } = await axios.post('http://localhost:3000/api/auth/inscription', { email, password });
+        e.preventDefault();
+        setError('');
 
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        localStorage.setItem('token',response.data.token);
-        navigate('/dashboard');
+        try {
+            const response = await axios.post('http://localhost:3000/api/auth/inscription', { email, password });
+
+            console.log(response.data.message);
+            navigate('/login');
+
         } catch (err) {
-        alert('Erreur de connexion (Le back-end est-il prêt ?)');
-
+            setError('Erreur lors de l\'inscription. Cet email est peut-être déjà pris ?');
+            console.error(err);
         }
-}
-
+    }
 
     return (
         <div>
